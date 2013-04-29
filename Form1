@@ -25,7 +25,6 @@ namespace blogi
         Label post3 = new Label();
         Label post4 = new Label();
         Label post5 = new Label();
-        int i = 0;
         int postCount=0;
         
         public Form1()
@@ -185,8 +184,8 @@ namespace blogi
             if (sender == NextButton)
             {
                 PrevButton.Enabled = true;
-                postCount += 5;
-                if (postCount >= posts.PostCount() - 1)
+                postCount += 10;
+                if (postCount > posts.PostCount())
                 {
                     postCount = posts.PostCount();
                     NextButton.Enabled = false;
@@ -195,7 +194,6 @@ namespace blogi
             else if (sender == PrevButton)
             {
                 NextButton.Enabled = true;
-                postCount -= 5;
                 if (postCount < 6)
                 {
                     postCount = 5;
