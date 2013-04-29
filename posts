@@ -1,0 +1,37 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Collections;
+namespace blogi
+{
+    class Posts
+    {
+        ArrayList posts = new ArrayList();
+        public Posts()
+        {
+            posts.Add("Hello World!");
+            posts.Add("hi everyone");
+            posts.Add("everything is fine");
+            posts.Add("its raining outside");
+            posts.Add("Sunshine");
+            posts.Add("back to winter");
+
+        }
+        public int PostCount()
+        {
+            return posts.Count;
+        }
+
+        public void AddPost(string post)
+        {
+            posts.Add(post);
+        }
+        public string GetPost(int i)
+        {
+            
+            return (string)posts[i];
+        }
+
+    }
+}
