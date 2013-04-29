@@ -212,8 +212,8 @@ namespace blogi
                     postCount = posts.PostCount();
                     newPost.Text = "";
                     
-                    NextButton.Enabled = true;
-                    PrevButton.Enabled = false;
+                    NextButton.Enabled = false;
+                    PrevButton.Enabled = true;
                 }
                 postCount = posts.PostCount();
                 
@@ -257,6 +257,7 @@ namespace blogi
 
             tabPage1.Controls.Add(post5);
         }
+
 
     }
 }
