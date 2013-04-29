@@ -258,6 +258,5 @@ namespace blogi
             tabPage1.Controls.Add(post5);
         }
 
-
     }
 }
