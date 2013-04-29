@@ -32,6 +32,5 @@ namespace blogi
             
             return (string)posts[i];
         }
-
     }
 }
