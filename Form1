@@ -1,0 +1,263 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Windows.Forms;
+using System.Collections;
+
+namespace blogi
+{
+    public partial class Form1 : Form
+    {
+        Posts posts = new Posts();
+        TabPage tabPage1 = new TabPage();
+        TabPage tabPage2 = new TabPage();
+        Button NextButton = new Button();
+        Button PrevButton = new Button();
+        Label label = new Label();
+        Button AddPost = new Button();
+        TextBox newPost = new TextBox();
+        Label post1 = new Label();
+        Label post2 = new Label();
+        Label post3 = new Label();
+        Label post4 = new Label();
+        Label post5 = new Label();
+        int i = 0;
+        int postCount=0;
+        
+        public Form1()
+        {
+            InitializeComponent();
+            // Create a TabControl and set its properties
+            this.Text = "My Blog";
+            this.Size = new Size(520, 450);
+
+            
+            
+            if(postCount==0)
+            postCount = posts.PostCount();
+
+            
+            TabControl dynamicTabControl = new TabControl();
+            dynamicTabControl.Name = "DynamicTabControl";
+            
+            dynamicTabControl.Width = 500;
+            dynamicTabControl.Height = 400;
+            dynamicTabControl.Parent = this;
+
+            // Add News feed tab
+            
+            tabPage1.Name = "tabPage1";
+            tabPage1.Text = "News feed";
+            tabPage1.BackColor = Color.Green;
+            tabPage1.ForeColor = Color.White;
+            tabPage1.Font = new Font("Verdana", 12);
+
+            dynamicTabControl.TabPages.Add(tabPage1);
+            // Add Create new post tab
+            
+            tabPage2.Name = "tabPage2";
+            tabPage2.Text = "New post";
+            tabPage2.BackColor = Color.Orange;
+            tabPage2.ForeColor = Color.White;
+
+
+            dynamicTabControl.TabPages.Add(tabPage2);
+
+            // Create a Button previous page and add it to news feed
+
+
+            NextButton.Text = "Next page";
+            NextButton.Enabled = false;
+            NextButton.BackColor = Color.Blue;
+            NextButton.ForeColor = Color.White;
+            NextButton.Font = new Font("Verdana", 12);
+            NextButton.Width = 100;
+            NextButton.Height = 30;
+            NextButton.Location = new Point(25, ClientSize.Height - 75);
+
+            NextButton.Click += new EventHandler(NextButton_Click);
+            // Add Button control to TabPage
+            tabPage1.Controls.Add(NextButton);
+
+
+            // Create a Button next page and add it to news feed
+
+
+            PrevButton.Text = "Previous Page";
+            PrevButton.BackColor = Color.Blue;
+            PrevButton.ForeColor = Color.White;
+            PrevButton.Font = new Font("Verdana", 12);
+            PrevButton.Width = 100;
+            PrevButton.Height = 30;
+            PrevButton.Location = new Point(130, ClientSize.Height - 75);
+            PrevButton.Click += new EventHandler(NextButton_Click);
+            // Add Button control to TabPage
+            tabPage1.Controls.Add(PrevButton);
+
+
+
+            //Add label for newpost
+            label.Location = new Point(25, 25);
+            label.Size = new Size(250, 25);
+            label.Font = new Font("verdana", 10);
+            label.Text = "Enter your new message";
+
+            tabPage2.Controls.Add(label);
+            //Add new post form
+
+            
+            newPost.Location = new Point(25, 50);
+            newPost.Multiline = true;
+            newPost.Size = new Size(220, 125);
+            //add new post form into new post tab
+            tabPage2.Controls.Add(newPost);
+
+            // Create a new post Button and add it to new post
+            
+
+            AddPost.Text = "Add post";
+            AddPost.BackColor = Color.Green;
+            AddPost.ForeColor = Color.White;
+            AddPost.Font = new Font("Verdana", 12);
+            AddPost.Width = 100;
+            AddPost.Height = 30;
+            AddPost.Location = new Point(25, newPost.Bottom+10);
+            AddPost.Click += new EventHandler(NextButton_Click);
+            // Add Button control to TabPage
+            tabPage2.Controls.Add(AddPost);
+            
+            
+            
+            
+            post1.Text = posts.GetPost(postCount - 1);                
+            post1.Location = new Point(50,30);                
+            post1.BackColor = Color.Blue;
+            post1.Size = new Size(100, 50);
+            
+            tabPage1.Controls.Add(post1);
+            
+            
+            post2.Text = posts.GetPost((--postCount) - 1);
+            post2.Location = new Point(50, post1.Bottom+5);
+            post2.BackColor = Color.Blue;
+            post2.Size = new Size(100, 50);
+            
+            tabPage1.Controls.Add(post2);
+
+            
+            post3.Text = posts.GetPost((--postCount) - 1);
+            post3.Location = new Point(50, post2.Bottom + 5);
+            post3.BackColor = Color.Blue;
+            post3.Size = new Size(100, 50);
+            
+            tabPage1.Controls.Add(post3);
+
+            
+            post4.Text = posts.GetPost((--postCount) - 1);
+            post4.Location = new Point(50, post3.Bottom + 5);
+            post4.BackColor = Color.Blue;
+            post4.Size = new Size(100, 50);
+            
+            tabPage1.Controls.Add(post4);
+
+            
+            post5.Text = posts.GetPost((--postCount) - 1);
+            post5.Location = new Point(50, post4.Bottom + 5);
+            post5.BackColor = Color.Blue;
+            post5.Size = new Size(100, 50);
+            
+            tabPage1.Controls.Add(post5);
+            
+        
+            
+            
+            
+        }
+
+
+
+        void NextButton_Click(object sender, EventArgs e)
+        {
+            if (sender == NextButton)
+            {
+                PrevButton.Enabled = true;
+                postCount += 5;
+                if (postCount >= posts.PostCount() - 1)
+                {
+                    postCount = posts.PostCount();
+                    NextButton.Enabled = false;
+                }
+            }
+            else if (sender == PrevButton)
+            {
+                NextButton.Enabled = true;
+                postCount -= 5;
+                if (postCount < 6)
+                {
+                    postCount = 5;
+                    PrevButton.Enabled = false;
+                }
+                tabPage1.Refresh();
+                
+            }
+            else if (sender == AddPost)
+            {
+                if (newPost.Text != "")
+                {
+                    posts.AddPost(newPost.Text);
+                    postCount = posts.PostCount();
+                    newPost.Text = "";
+                    
+                    NextButton.Enabled = true;
+                    PrevButton.Enabled = false;
+                }
+                postCount = posts.PostCount();
+                
+            }
+            post1.Text = posts.GetPost(postCount - 1);
+            post1.Location = new Point(50, 30);
+            post1.BackColor = Color.Blue;
+            post1.Size = new Size(100, 50);
+
+            tabPage1.Controls.Add(post1);
+
+
+            post2.Text = posts.GetPost((--postCount) - 1);
+            post2.Location = new Point(50, post1.Bottom + 5);
+            post2.BackColor = Color.Blue;
+            post2.Size = new Size(100, 50);
+
+            tabPage1.Controls.Add(post2);
+
+
+            post3.Text = posts.GetPost((--postCount) - 1);
+            post3.Location = new Point(50, post2.Bottom + 5);
+            post3.BackColor = Color.Blue;
+            post3.Size = new Size(100, 50);
+
+            tabPage1.Controls.Add(post3);
+
+
+            post4.Text = posts.GetPost((--postCount) - 1);
+            post4.Location = new Point(50, post3.Bottom + 5);
+            post4.BackColor = Color.Blue;
+            post4.Size = new Size(100, 50);
+
+            tabPage1.Controls.Add(post4);
+
+
+            post5.Text = posts.GetPost((--postCount) - 1);
+            post5.Location = new Point(50, post4.Bottom + 5);
+            post5.BackColor = Color.Blue;
+            post5.Size = new Size(100, 50);
+
+            tabPage1.Controls.Add(post5);
+        }
+
+
+    }
+}
