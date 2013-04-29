@@ -8,7 +8,7 @@ namespace blogi
     static class Program
     {
         /// <summary>
-        /// Programm enter point
+        /// Program enter point
         /// </summary>
         [STAThread]
         static void Main()
